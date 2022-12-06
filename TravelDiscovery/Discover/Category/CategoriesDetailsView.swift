@@ -9,7 +9,12 @@ import SwiftUI
 import Kingfisher
 
 struct CategoriesDetailsView: View {
-    @ObservedObject var vm = CategoryDetailsViewModel()
+    @ObservedObject private var vm: CategoryDetailsViewModel
+    private var name: String
+    init(name: String) {
+        self.name = name
+        vm = .init(name: name)
+    }
     var body: some View {
         ZStack {
             if vm.isLoading {
@@ -25,7 +30,14 @@ struct CategoriesDetailsView: View {
                     
             } else {
                 ZStack {
-                    Text(vm.errorMessage)
+                    if !vm.errorMessage.isEmpty {
+                        VStack(spacing: 12) {
+                            Image(systemName: "xmark.octagon.fill")
+                                .font(.system(size: 64,weight: .semibold))
+                                .foregroundColor(.red)
+                            Text(vm.errorMessage)
+                        }
+                    }
                 ScrollView{
                     ForEach(vm.places, id: \.self) { place in
                         VStack(alignment: .leading, spacing: 0) {
@@ -44,13 +56,13 @@ struct CategoriesDetailsView: View {
             }
             }
         }
-        .navigationBarTitle("Category",displayMode:.inline)
+        .navigationBarTitle(name,displayMode:.inline)
         
     }
 }
 
 struct CategoriesDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesDetailsView()
+        DiscoverView()
     }
 }
