@@ -56,14 +56,29 @@ struct ActivityIndicatorView: UIViewRepresentable {
     typealias UIViewType = UIActivityIndicatorView
 }
 
+struct Place: Decodable,Hashable {
+    var name,thumbnail: String
+}
+
 class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
-    @Published var places = [Int]()
+    @Published var places = [Place]()
+    @Published var errorMessage = ""
     init() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=art") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                return
+            }
+            do {
+                self.places = try JSONDecoder().decode([Place].self,from: data)
+            } catch {
+                print("failed to decode json:",error)
+                self.errorMessage = error.localizedDescription
+            }
             self.isLoading = false
-            self.places = [1,2,3]
-        }
+        }.resume()
+        
     }
 }
 
@@ -83,13 +98,15 @@ struct CategoriesDetailsView: View {
                 .cornerRadius(8)
                     
             } else {
+                ZStack {
+                    Text(vm.errorMessage)
                 ScrollView{
-                    ForEach(vm.places, id: \.self) { num in
+                    ForEach(vm.places, id: \.self) { place in
                         VStack(alignment: .leading, spacing: 0) {
                             Image("art1")
                                 .resizable()
                                 .scaledToFill()
-                            Text("Detail view")
+                            Text(place.name)
                                 .font(.system(size: 12,weight: .semibold))
                                 .padding()
                         }
@@ -98,6 +115,7 @@ struct CategoriesDetailsView: View {
                     }
                     
                 }
+            }
             }
         }
         .navigationBarTitle("Category",displayMode:.inline)
