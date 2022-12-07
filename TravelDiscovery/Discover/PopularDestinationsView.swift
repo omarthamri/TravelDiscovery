@@ -44,7 +44,7 @@ struct PopularDestinationsView: View {
 struct PopularDestinationDetailView: View {
     @State var region: MKCoordinateRegion
     var destination: Destination
-    @State var isShowingAttractions = false
+    @State var isShowingAttractions = true
     
     init(destination: Destination) {
         self.destination = destination
@@ -86,21 +86,53 @@ struct PopularDestinationDetailView: View {
             }
             .padding(.horizontal)
             Map(coordinateRegion: $region, annotationItems: isShowingAttractions ? attractions : []) { attraction in
-                MapMarker(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude), tint: .red)
+               // MapMarker(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude), tint: .red)
+                MapAnnotation(coordinate:  .init(latitude: attraction.latitude, longitude: attraction.longitude)) {
+                    CustomMapAnnotation(attraction: attraction)
+                }
             }
                 .frame(height: 300)
             
         }.navigationBarTitle(destination.name,displayMode: .inline)
     }
     let attractions: [Attraction] = [
-        .init(name: "eiffel tour", longitude: 2.355103 , latitude: 48.875002),
-        .init(name: "champs elysées", longitude: 2.311780 , latitude: 48.866867)
+        .init(name: "eiffel tour", imageName: "paris", longitude: 2.355103 , latitude: 48.875002),
+        .init(name: "champs elysées", imageName: "japan", longitude: 2.311780, latitude: 48.866867)
     ]
+}
+
+struct CustomMapAnnotation: View {
+    
+    var attraction: Attraction
+    var body: some View {
+        VStack {
+            Image(attraction.imageName)
+                .resizable()
+                .frame(width:80, height:60)
+                .cornerRadius(4)
+                .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color.init(white: 0, opacity: 0.5))
+                )
+            Text(attraction.name)
+                .font(.system(size: 12,weight: .semibold))
+                .padding(.horizontal,6)
+                .padding(.vertical,4)
+                .background(.linearGradient(colors: [Color.red,Color.blue], startPoint: .leading, endPoint: .trailing))
+                .foregroundColor(.white)
+                .cornerRadius(4)
+                .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color.init(white: 0, opacity: 0.5))
+                )
+        }
+        .shadow(radius: 5)
+    }
 }
 
 struct Attraction: Identifiable {
     var id = UUID().uuidString
-    var name: String
+    var name,imageName: String
     var longitude,latitude: Double
 }
 
