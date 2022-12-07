@@ -44,6 +44,7 @@ struct PopularDestinationsView: View {
 struct PopularDestinationDetailView: View {
     @State var region: MKCoordinateRegion
     var destination: Destination
+    @State var isShowingAttractions = false
     
     init(destination: Destination) {
         self.destination = destination
@@ -54,6 +55,8 @@ struct PopularDestinationDetailView: View {
             Image(destination.imageName)
                 .resizable()
                 .scaledToFill()
+                .frame(height: 150)
+                .clipped()
             VStack(alignment: .leading) {
                 Text(destination.name)
                     .font(.system(size: 18,weight: .bold))
@@ -69,15 +72,36 @@ struct PopularDestinationDetailView: View {
                     .padding(.top,8)
                     .font(.system(size: 14))
                 HStack { Spacer() }
+                HStack {
                 Text("Location")
                     .font(.system(size: 18,weight: .semibold))
+                    Spacer()
+                    Button(action: {isShowingAttractions.toggle()}) {
+                        Text("\(isShowingAttractions ? "Hide" : "Show") attractions")
+                            .font(.system(size: 12,weight: .semibold))
+                    }
+                    Toggle("", isOn: $isShowingAttractions)
+                        .labelsHidden()
+                }
             }
             .padding(.horizontal)
-            Map(coordinateRegion: $region)
-                .frame(height: 200)
+            Map(coordinateRegion: $region, annotationItems: isShowingAttractions ? attractions : []) { attraction in
+                MapMarker(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude), tint: .red)
+            }
+                .frame(height: 300)
             
         }.navigationBarTitle(destination.name,displayMode: .inline)
     }
+    let attractions: [Attraction] = [
+        .init(name: "eiffel tour", longitude: 2.355103 , latitude: 48.875002),
+        .init(name: "champs elysées", longitude: 2.311780 , latitude: 48.866867)
+    ]
+}
+
+struct Attraction: Identifiable {
+    var id = UUID().uuidString
+    var name: String
+    var longitude,latitude: Double
 }
 
 struct popularDestinationTile: View {
