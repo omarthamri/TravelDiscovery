@@ -9,4 +9,5 @@ import Foundation
 
 struct Destination: Hashable {
     var name,country,imageName: String
+    var latitude,longitude: Double
 }

@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct PopularDestinationsView: View {
     var destinations: [Destination] = [
-        .init(name: "Paris", country: "France", imageName: "paris"),
-        .init(name: "Tokyo", country: "Japan", imageName: "japan"),
-        .init(name: "New york", country: "US", imageName: "usa"),
+        .init(name: "Paris", country: "France", imageName: "paris", latitude: 48.875002, longitude: 2.355103),
+        .init(name: "Tokyo", country: "Japan", imageName: "japan", latitude: 35.545965, longitude: 139.643443),
+        .init(name: "New york", country: "US", imageName: "usa", latitude: 40.709951, longitude: -74.007596),
     ]
     var body: some View {
         VStack {
@@ -41,7 +42,13 @@ struct PopularDestinationsView: View {
 }
 
 struct PopularDestinationDetailView: View {
+    @State var region: MKCoordinateRegion
     var destination: Destination
+    
+    init(destination: Destination) {
+        self.destination = destination
+        self._region = State(initialValue: MKCoordinateRegion(center: .init(latitude: destination.latitude, longitude: destination.longitude), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+    }
     var body: some View {
         ScrollView {
             Image(destination.imageName)
@@ -60,9 +67,14 @@ struct PopularDestinationDetailView: View {
                 .padding(.top,2)
                 Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
                     .padding(.top,8)
+                    .font(.system(size: 14))
                 HStack { Spacer() }
+                Text("Location")
+                    .font(.system(size: 18,weight: .semibold))
             }
             .padding(.horizontal)
+            Map(coordinateRegion: $region)
+                .frame(height: 200)
             
         }.navigationBarTitle(destination.name,displayMode: .inline)
     }
@@ -97,7 +109,7 @@ struct popularDestinationTile: View {
 struct PopularDestinationsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PopularDestinationDetailView(destination: Destination(name: "Paris", country: "france", imageName: "paris"))
+            PopularDestinationDetailView(destination: Destination(name: "Paris", country: "france", imageName: "paris", latitude: 48.875002, longitude: 2.355103))
         }
         DiscoverView()
     }
