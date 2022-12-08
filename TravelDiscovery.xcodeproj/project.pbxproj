@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		482BE0F2294171F4002B010F /* DestinationHeaderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482BE0F1294171F4002B010F /* DestinationHeaderContainer.swift */; };
 		48734D94293FB30C007167FE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 48734D93293FB30C007167FE /* Kingfisher */; };
 		48734D97293FB61D007167FE /* CategoriesDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48734D96293FB61D007167FE /* CategoriesDetailsView.swift */; };
 		48734D9A293FB6AC007167FE /* CategoryDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48734D99293FB6AC007167FE /* CategoryDetailsViewModel.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		482BE0F1294171F4002B010F /* DestinationHeaderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationHeaderContainer.swift; sourceTree = "<group>"; };
 		48734D96293FB61D007167FE /* CategoriesDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesDetailsView.swift; sourceTree = "<group>"; };
 		48734D99293FB6AC007167FE /* CategoryDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailsViewModel.swift; sourceTree = "<group>"; };
 		48734D9B293FB6F1007167FE /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		482BE0F0294171E4002B010F /* Destination */ = {
+			isa = PBXGroup;
+			children = (
+				482BE0F1294171F4002B010F /* DestinationHeaderContainer.swift */,
+			);
+			path = Destination;
+			sourceTree = "<group>";
+		};
 		48734D95293FB60E007167FE /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +128,7 @@
 		4875CCA7293EAB9E00A6FEDC /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				482BE0F0294171E4002B010F /* Destination */,
 				48734D95293FB60E007167FE /* Category */,
 				4895AC2F293C1C98002E874C /* DiscoverView.swift */,
 				4875CCA8293EAF4300A6FEDC /* PopularDestinationsView.swift */,
@@ -346,6 +357,7 @@
 			files = (
 				4875CCAD293EAFD100A6FEDC /* TrendingCreatorsView.swift in Sources */,
 				4875CCBB293EBA2D00A6FEDC /* TileModifier.swift in Sources */,
+				482BE0F2294171F4002B010F /* DestinationHeaderContainer.swift in Sources */,
 				4875CCB8293EB29E00A6FEDC /* Category.swift in Sources */,
 				4875CCA9293EAF4400A6FEDC /* PopularDestinationsView.swift in Sources */,
 				4875CCAB293EAF9400A6FEDC /* PopularRestaurantsView.swift in Sources */,

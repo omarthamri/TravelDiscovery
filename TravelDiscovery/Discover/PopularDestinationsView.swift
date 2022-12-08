@@ -52,11 +52,8 @@ struct PopularDestinationDetailView: View {
     }
     var body: some View {
         ScrollView {
-            Image(destination.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(height: 150)
-                .clipped()
+            DestinationHeaderContainer()
+                .frame(height: 250)
             VStack(alignment: .leading) {
                 Text(destination.name)
                     .font(.system(size: 18,weight: .bold))
