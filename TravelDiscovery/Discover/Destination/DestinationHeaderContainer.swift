@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
-    var imagesName: [String]
+    var imageUrlStrings: [String]
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController(imageNames: imagesName)
+        let pvc = CustomPageViewController(imageUrlStrings: imageUrlStrings)
         return pvc
     }
     
@@ -52,12 +53,12 @@ class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSou
     
     var allControllers: [UIViewController] = []
     
-    init(imageNames: [String]) {
+    init(imageUrlStrings: [String]) {
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .purple
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        allControllers = imageNames.map({ imageName in
-            let hostingController = UIHostingController(rootView: Image(imageName).resizable().scaledToFill())
+        allControllers = imageUrlStrings.map({ imageName in
+            let hostingController = UIHostingController(rootView: KFImage(URL(string: imageName)).resizable().scaledToFill())
             hostingController.view.clipsToBounds = true
             return hostingController
         })
@@ -73,10 +74,12 @@ class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSou
 }
 
 struct DestinationHeaderContainer_Previews: PreviewProvider {
+    static let imageUrlStrings = ["https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/7156c3c6-945e-4284-a796-915afdc158b5","https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/b1642068-5624-41cf-83f1-3f6dff8c1702","https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/2240d474-2237-4cd3-9919-562cd1bb439e"]
     static var previews: some View {
         NavigationView {
             PopularDestinationDetailView(destination: Destination(name: "Paris", country: "france", imageName: "paris", latitude: 48.875002, longitude: 2.355103))
         }
-        DestinationHeaderContainer(imagesName: ["paris","art1","art2"])
+        DestinationHeaderContainer(imageUrlStrings: imageUrlStrings)
+            .frame(height:300)
     }
 }
