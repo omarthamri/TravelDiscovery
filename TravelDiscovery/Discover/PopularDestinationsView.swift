@@ -52,7 +52,7 @@ struct PopularDestinationDetailView: View {
     }
     var body: some View {
         ScrollView {
-            DestinationHeaderContainer()
+            DestinationHeaderContainer(imagesName: ["paris","art1","art2"])
                 .frame(height: 250)
             VStack(alignment: .leading) {
                 Text(destination.name)

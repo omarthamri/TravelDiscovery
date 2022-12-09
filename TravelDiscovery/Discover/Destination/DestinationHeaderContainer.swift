@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
+    var imagesName: [String]
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController()
+        let pvc = CustomPageViewController(imageNames: imagesName)
         return pvc
     }
     
@@ -49,18 +50,18 @@ class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSou
         return allControllers[index + 1]
     }
     
-    let firstViewController = UIHostingController(rootView: Text("First View Controller"))
-    let secondViewController = UIHostingController(rootView: Text("Second View Controller"))
-    let thirdViewController = UIHostingController(rootView: Text("Third view controller"))
-    lazy var allControllers: [UIViewController] = [
-        firstViewController,secondViewController,thirdViewController
-    ]
+    var allControllers: [UIViewController] = []
     
-    init() {
+    init(imageNames: [String]) {
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .purple
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        setViewControllers([firstViewController], direction: .forward, animated: true )
+        allControllers = imageNames.map({ imageName in
+            let hostingController = UIHostingController(rootView: Image(imageName).resizable().scaledToFill())
+            hostingController.view.clipsToBounds = true
+            return hostingController
+        })
+        setViewControllers([allControllers.first!], direction: .forward, animated: true )
         self.dataSource = self
         self.delegate = self
         
@@ -76,6 +77,6 @@ struct DestinationHeaderContainer_Previews: PreviewProvider {
         NavigationView {
             PopularDestinationDetailView(destination: Destination(name: "Paris", country: "france", imageName: "paris", latitude: 48.875002, longitude: 2.355103))
         }
-        DestinationHeaderContainer()
+        DestinationHeaderContainer(imagesName: ["paris","art1","art2"])
     }
 }
