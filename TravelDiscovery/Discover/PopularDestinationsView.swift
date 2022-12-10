@@ -28,7 +28,7 @@ struct PopularDestinationsView: View {
                 HStack(spacing: 8) {
                     ForEach(destinations, id: \.self) { destination in
                         NavigationLink {
-                            PopularDestinationDetailView(destination: destination)
+                            NavigationLazyView(PopularDestinationDetailView(destination: destination))
                         } label: {
                             popularDestinationTile(destination: destination)
                                 .padding(.bottom)
@@ -41,7 +41,34 @@ struct PopularDestinationsView: View {
     }
 }
 
+struct DestinationDetail: Decodable {
+    let description: String
+    let photos: [String]
+}
+
+class DestinationDetailViewModel: ObservableObject {
+    @Published var isLoading = true
+    @Published var destinationDetails: DestinationDetail?
+    init(name: String) {
+        DispatchQueue.main.async {
+            let fixedUrlString = "https://travel.letsbuildthatapp.com/travel_discovery/destination?name=\(name.lowercased())".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            guard let url = URL(string: fixedUrlString) else { return }
+            URLSession.shared.dataTask(with: url) { data, resp, err in
+                guard let data = data else { return }
+                print(String(data: data, encoding: .utf8))
+                do {
+                    self.destinationDetails = try JSONDecoder().decode(DestinationDetail.self, from: data)
+                } catch {
+                    print("failed to decode json",error)
+                }
+            }.resume()
+        }
+        
+    }
+}
+
 struct PopularDestinationDetailView: View {
+    @ObservedObject var vm: DestinationDetailViewModel
     @State var region: MKCoordinateRegion
     var destination: Destination
     @State var isShowingAttractions = true
@@ -50,13 +77,16 @@ struct PopularDestinationDetailView: View {
     init(destination: Destination) {
         self.destination = destination
         self._region = State(initialValue: MKCoordinateRegion(center: .init(latitude: destination.latitude, longitude: destination.longitude), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+        vm = .init(name: destination.name)
     }
     var body: some View {
         ScrollView {
-            DestinationHeaderContainer(imageUrlStrings: imageUrlStrings)
+            if let photos = vm.destinationDetails?.photos {
+            DestinationHeaderContainer(imageUrlStrings: photos)
                 .frame(height: 250)
+            }
             VStack(alignment: .leading) {
-                Text(destination.name)
+                Text(vm.destinationDetails?.description ?? "")
                     .font(.system(size: 18,weight: .bold))
                 Text(destination.country)
                 HStack {
