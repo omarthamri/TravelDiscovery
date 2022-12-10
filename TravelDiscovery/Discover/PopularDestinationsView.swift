@@ -86,7 +86,7 @@ struct PopularDestinationDetailView: View {
                 .frame(height: 250)
             }
             VStack(alignment: .leading) {
-                Text(vm.destinationDetails?.description ?? "")
+                Text(destination.name)
                     .font(.system(size: 18,weight: .bold))
                 Text(destination.country)
                 HStack {
@@ -96,7 +96,7 @@ struct PopularDestinationDetailView: View {
                 }
                 }
                 .padding(.top,2)
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+                Text(vm.destinationDetails?.description ?? "")
                     .padding(.top,8)
                     .font(.system(size: 14))
                 HStack { Spacer() }
