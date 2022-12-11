@@ -1,17 +1,19 @@
 //
-//  DestinationHeaderContainer.swift
+//  RestaurantCarouselView.swift
 //  TravelDiscovery
 //
-//  Created by omar thamri on 8/12/2022.
+//  Created by omar thamri on 11/12/2022.
 //
+
+import SwiftUI
 
 import SwiftUI
 import Kingfisher
 
-struct DestinationHeaderContainer: UIViewControllerRepresentable {
+struct RestaurantCarouselView: UIViewControllerRepresentable {
     var imageUrlStrings: [String]
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CustomPageViewController(imageUrlStrings: imageUrlStrings)
+        let pvc = CarouselPageViewController(imageUrlStrings: imageUrlStrings)
         return pvc
     }
     
@@ -25,7 +27,7 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     
 }
 
-class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSource,UIPageViewControllerDelegate {
+class CarouselPageViewController: UIPageViewController,UIPageViewControllerDataSource,UIPageViewControllerDelegate {
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return allControllers.count
@@ -59,7 +61,10 @@ class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSou
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         allControllers = imageUrlStrings.map({ imageName in
             let hostingController = UIHostingController(rootView:
-                KFImage(URL(string: imageName)).resizable().scaledToFill())
+                                                            ZStack {
+                Color.black
+                KFImage(URL(string: imageName)).resizable().scaledToFit()
+            })
             hostingController.view.clipsToBounds = true
             return hostingController
         })
@@ -77,7 +82,7 @@ class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSou
     }
 }
 
-struct DestinationHeaderContainer_Previews: PreviewProvider {
+struct RestaurantCarouselView_Previews: PreviewProvider {
     static let imageUrlStrings = ["https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/7156c3c6-945e-4284-a796-915afdc158b5","https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/b1642068-5624-41cf-83f1-3f6dff8c1702","https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/2240d474-2237-4cd3-9919-562cd1bb439e"]
     static var previews: some View {
         NavigationView {

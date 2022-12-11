@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		482BE0F2294171F4002B010F /* DestinationHeaderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482BE0F1294171F4002B010F /* DestinationHeaderContainer.swift */; };
 		484E84CF2944265900E2C78B /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E84CE2944265900E2C78B /* RestaurantDetailView.swift */; };
+		48717D6C2946399D00EB9F85 /* RestaurantCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48717D6B2946399D00EB9F85 /* RestaurantCarouselView.swift */; };
 		48734D94293FB30C007167FE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 48734D93293FB30C007167FE /* Kingfisher */; };
 		48734D97293FB61D007167FE /* CategoriesDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48734D96293FB61D007167FE /* CategoriesDetailsView.swift */; };
 		48734D9A293FB6AC007167FE /* CategoryDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48734D99293FB6AC007167FE /* CategoryDetailsViewModel.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		482BE0F1294171F4002B010F /* DestinationHeaderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationHeaderContainer.swift; sourceTree = "<group>"; };
 		484E84CE2944265900E2C78B /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
+		48717D6B2946399D00EB9F85 /* RestaurantCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCarouselView.swift; sourceTree = "<group>"; };
 		48734D96293FB61D007167FE /* CategoriesDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesDetailsView.swift; sourceTree = "<group>"; };
 		48734D99293FB6AC007167FE /* CategoryDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailsViewModel.swift; sourceTree = "<group>"; };
 		48734D9B293FB6F1007167FE /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			children = (
 				484E84CE2944265900E2C78B /* RestaurantDetailView.swift */,
 				48AC061129458B3500E869A0 /* RestaurantPhotosView.swift */,
+				48717D6B2946399D00EB9F85 /* RestaurantCarouselView.swift */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				48734D97293FB61D007167FE /* CategoriesDetailsView.swift in Sources */,
 				48734D9A293FB6AC007167FE /* CategoryDetailsViewModel.swift in Sources */,
 				4875CCAF293EB16200A6FEDC /* DiscoverCategoriesView.swift in Sources */,
+				48717D6C2946399D00EB9F85 /* RestaurantCarouselView.swift in Sources */,
 				4875CCB2293EB24700A6FEDC /* Destination.swift in Sources */,
 				48AC061229458B3500E869A0 /* RestaurantPhotosView.swift in Sources */,
 				48734D9C293FB6F1007167FE /* ActivityIndicatorView.swift in Sources */,
