@@ -12,8 +12,9 @@ import Kingfisher
 
 struct RestaurantCarouselView: UIViewControllerRepresentable {
     var imageUrlStrings: [String]
+    let selectedIndex: Int
     func makeUIViewController(context: Context) -> UIViewController {
-        let pvc = CarouselPageViewController(imageUrlStrings: imageUrlStrings)
+        let pvc = CarouselPageViewController(imageUrlStrings: imageUrlStrings, selectedIndex: selectedIndex)
         return pvc
     }
     
@@ -34,7 +35,7 @@ class CarouselPageViewController: UIPageViewController,UIPageViewControllerDataS
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
+        return self.selectedIndex
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -54,8 +55,10 @@ class CarouselPageViewController: UIPageViewController,UIPageViewControllerDataS
     }
     
     var allControllers: [UIViewController] = []
+    var selectedIndex: Int
     
-    init(imageUrlStrings: [String]) {
+    init(imageUrlStrings: [String],selectedIndex: Int) {
+        self.selectedIndex = selectedIndex
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .purple
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -68,10 +71,9 @@ class CarouselPageViewController: UIPageViewController,UIPageViewControllerDataS
             hostingController.view.clipsToBounds = true
             return hostingController
         })
-        if let first = allControllers.first {
-            setViewControllers([allControllers.first!], direction: .forward, animated: true )
+        if selectedIndex < allControllers.count {
+        setViewControllers([allControllers[selectedIndex]], direction: .forward, animated: true)
         }
-        
         self.dataSource = self
         self.delegate = self
         
