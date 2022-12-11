@@ -6,9 +6,41 @@
 //
 
 import SwiftUI
+import Kingfisher
+
+struct RestaurantDetails: Decodable {
+    let description: String
+    let popularDishes: [Dish]
+}
+
+struct Dish: Decodable,Hashable {
+    let name,price,photo: String
+    let numPhotos: Int
+}
+
+class RestaurantDetailViewModel: ObservableObject {
+    @Published var isLoading = true
+    @Published var details: RestaurantDetails?
+    init() {
+        let urlString = "https://travel.letsbuildthatapp.com/travel_discovery/restaurant?id=0"
+        guard let url = URL(string: urlString) else {return}
+        URLSession.shared.dataTask(with: url) { data, response, err in
+            guard let data = data else {return}
+            DispatchQueue.main.async {
+            do {
+                self.details = try JSONDecoder().decode(RestaurantDetails.self, from: data)
+            } catch {
+                print("failed to parse json",error)
+            }
+            }
+            
+        }.resume()
+    }
+}
 
 struct RestaurantDetailView: View {
     let restaurant: Restaurant
+    @ObservedObject var vm = RestaurantDetailViewModel()
     var body: some View {
         ScrollView {
             ZStack(alignment: .bottomLeading) {
@@ -47,7 +79,7 @@ struct RestaurantDetailView: View {
                             .foregroundColor(.orange)
                     }
                 }
-                Text("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                Text(vm.details?.description ?? "")
                     .padding(.top,8)
                     .font(.system(size: 14,weight:.regular))
             }.padding()
@@ -59,23 +91,8 @@ struct RestaurantDetailView: View {
             .padding(.horizontal)
             ScrollView(.horizontal,showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(0..<5, id: \.self) { num in
-                        VStack(alignment: .leading) {
-                            Image("tapas")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 100)
-                                .cornerRadius(5)
-                                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray))
-                                .shadow(radius: 2)
-                                .padding(.vertical,2)
-                            Text("Japanese tapas")
-                                .font(.system(size: 14,weight: .bold))
-                            Text("88 photos")
-                                .foregroundColor(.gray)
-                                .font(.system(size: 12,weight: .regular))
-                            
-                        }
+                    ForEach(vm.details?.popularDishes ?? [] , id: \.self) { dish in
+                        DishCell(dish: dish)
                     }
                     
                 }
@@ -83,6 +100,38 @@ struct RestaurantDetailView: View {
             }
         }
         .navigationBarTitle("Restaurant details",displayMode: .inline)
+    }
+    let sampleDishPhotos = ["https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/e2f3f5d4-5993-4536-9d8d-b505d7986a5c","https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/a4d85eff-4c79-4141-a0d6-761cca48eae1"]
+}
+
+struct DishCell: View {
+    var dish: Dish
+    var body: some View {
+        VStack(alignment: .leading) {
+            ZStack(alignment: .bottomLeading) {
+                KFImage(URL(string: dish.photo))
+                    .resizable()
+                    .scaledToFill()
+                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray))
+                    .shadow(radius: 2)
+                    .padding(.vertical,2)
+                LinearGradient(colors: [.clear,.black], startPoint: .center, endPoint: .bottom)
+                Text(dish.price)
+                    .foregroundColor(Color(.white))
+                    .font(.system(size: 13,weight: .bold))
+                    .padding(.horizontal,6)
+                    .padding(.vertical,4)
+                    
+            }.frame(height: 100)
+                .cornerRadius(5)
+            
+            Text(dish.name)
+                .font(.system(size: 14,weight: .bold))
+            Text("\(dish.numPhotos) photos")
+                .foregroundColor(.gray)
+                .font(.system(size: 12,weight: .regular))
+            
+        }
     }
 }
 
