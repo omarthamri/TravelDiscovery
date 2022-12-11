@@ -81,11 +81,41 @@ struct UserDetailView: View {
                     }
                 }
                 ForEach(0..<5,id: \.self) { num in
-                    HStack {
-                        Spacer()
+                    VStack(alignment: .leading) {
+                        Image("japan")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 200)
+                            .clipped()
+                        HStack {
+                            Image("amy")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 34)
+                                .clipShape(Circle())
+                            VStack(alignment: .leading) {
+                                Text("here is my post")
+                                    .font(.system(size: 14,weight: .semibold))
+                                Text("500k views")
+                                    .font(.system(size: 12,weight: .regular))
+                            }
+                            
+                        }.padding(.horizontal,8)
+                        HStack {
+                            ForEach(0..<3,id: \.self) {num in
+                                Text("#traveling")
+                                    .foregroundColor(.blue)
+                                    .font(.system(size: 14,weight:.semibold))
+                                    .padding(.horizontal,12)
+                                    .padding(.vertical,4)
+                                    .background(Color(white: 0.9))
+                                    .cornerRadius(20)
+                            }
+                        }.padding(.bottom)
+                            .padding(.horizontal,8)
+                        
                     }
-                    .frame(height: 200)
-                    .background(Color(white: 0.9))
+                    .background(Color.white)
                     .cornerRadius(12)
                     .shadow(color: .init(white: 0.8), radius: 5, x: 0, y: 4)
                 }
