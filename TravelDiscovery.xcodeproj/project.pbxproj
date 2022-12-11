@@ -30,6 +30,7 @@
 		4895AC3F293C1C9B002E874C /* TravelDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4895AC3E293C1C9B002E874C /* TravelDiscoveryTests.swift */; };
 		4895AC49293C1C9B002E874C /* TravelDiscoveryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4895AC48293C1C9B002E874C /* TravelDiscoveryUITests.swift */; };
 		4895AC4B293C1C9B002E874C /* TravelDiscoveryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4895AC4A293C1C9B002E874C /* TravelDiscoveryUITestsLaunchTests.swift */; };
+		48AC061229458B3500E869A0 /* RestaurantPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC061129458B3500E869A0 /* RestaurantPhotosView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		4895AC44293C1C9B002E874C /* TravelDiscoveryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelDiscoveryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4895AC48293C1C9B002E874C /* TravelDiscoveryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelDiscoveryUITests.swift; sourceTree = "<group>"; };
 		4895AC4A293C1C9B002E874C /* TravelDiscoveryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelDiscoveryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		48AC061129458B3500E869A0 /* RestaurantPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPhotosView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				484E84CE2944265900E2C78B /* RestaurantDetailView.swift */,
+				48AC061129458B3500E869A0 /* RestaurantPhotosView.swift */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				48734D9A293FB6AC007167FE /* CategoryDetailsViewModel.swift in Sources */,
 				4875CCAF293EB16200A6FEDC /* DiscoverCategoriesView.swift in Sources */,
 				4875CCB2293EB24700A6FEDC /* Destination.swift in Sources */,
+				48AC061229458B3500E869A0 /* RestaurantPhotosView.swift in Sources */,
 				48734D9C293FB6F1007167FE /* ActivityIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
