@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TrendingCreatorsView: View {
     var users: [User] = [
-        .init(name: "Amy Adams", imageName: "amy"),
-        .init(name: "Billy Childs", imageName: "billy"),
-        .init(name: "Sam Smith", imageName: "sam"),
+        .init(id: 0, name: "Amy Adams", imageName: "amy"),
+        .init(id: 1, name: "Billy Childs", imageName: "billy"),
+        .init(id: 2, name: "Sam Smith", imageName: "sam"),
     ]
     var body: some View {
         VStack {
@@ -27,7 +27,7 @@ struct TrendingCreatorsView: View {
                 HStack(alignment: .top,spacing: 12) {
                     ForEach(users, id: \.self) { user in
                         NavigationLink {
-                            UserDetailView(user: user)
+                            NavigationLazyView(UserDetailView(user: user))
                         } label: {
                             DiscoverUserView(user: user)
                         }

@@ -8,6 +8,7 @@
 import Foundation
 
 struct User: Hashable {
-    var name,imageName: String
+    let id: Int
+    let name,imageName: String
     
 }

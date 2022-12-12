@@ -55,7 +55,6 @@ class DestinationDetailViewModel: ObservableObject {
             guard let url = URL(string: fixedUrlString) else { return }
             URLSession.shared.dataTask(with: url) { data, resp, err in
                 guard let data = data else { return }
-                print(String(data: data, encoding: .utf8))
                 do {
                     self.destinationDetails = try JSONDecoder().decode(DestinationDetail.self, from: data)
                 } catch {
