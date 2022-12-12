@@ -63,6 +63,9 @@ class CustomPageViewController: UIPageViewController,UIPageViewControllerDataSou
             hostingController.view.clipsToBounds = true
             return hostingController
         })
+        if let first = allControllers.first {
+            setViewControllers([first], direction: .forward, animated: true )
+        }
         
         self.dataSource = self
         self.delegate = self
